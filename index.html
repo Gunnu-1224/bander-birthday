@@ -19,17 +19,24 @@ body {
 section {
     min-height: 100vh;
     padding: 30px 10px;
-    display: none;
+    /* Important: We rely on 'display: none' initially */
+    display: none; 
     border: 4px solid goldenrod;
     position: relative;
-    display: flex;
+    /* Use flex for content centering */
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* FIX: Transition for smoother page change appearance (Optional) */
+    transition: opacity 0.5s ease;
+    opacity: 0;
 }
 
-/* FIX: Ensure 'section.active' correctly displays the current page */
-section.active { display: flex; } 
+/* FIX: This makes the active section visible */
+section.active { 
+    display: flex;
+    opacity: 1;
+}
 
 h1, h2 {
     text-shadow: 0 0 15px gold;
@@ -44,6 +51,7 @@ h1, h2 {
     margin: 20px auto;
 }
 
+/* 3D Flip BOX setup */
 .box-container {
     width: 150px;
     height: 150px;
@@ -83,7 +91,6 @@ h1, h2 {
 }
 
 .front { background: #ffd1dc; z-index: 2; }
-
 .back { transform: rotateY(180deg); }
 
 .back img {
@@ -93,6 +100,7 @@ h1, h2 {
     border-radius: 12px;
 }
 
+/* Heart and other elements CSS remains the same */
 .heart {
     font-size: 50px;
     margin-top: 30px;
@@ -107,110 +115,65 @@ h1, h2 {
     100% { transform: scale(1); }
 }
 
-#cake-container {
-    position: relative;
-    display: inline-block;
-    margin-top: 20px;
-}
-
-#cake {
-    width: 250px;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    border-radius: 50%;
-}
-
-.flame {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 35px;
-    transition: opacity 1s;
-    pointer-events: none;
-    z-index: 10;
-}
-
+#cake-container { position: relative; display: inline-block; margin-top: 20px; }
+#cake { width: 250px; cursor: pointer; box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); border-radius: 50%; }
+.flame { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); font-size: 35px; transition: opacity 1s; pointer-events: none; z-index: 10; }
 .blow { opacity: 0; }
-
-.love {
-    position: fixed;
-    top: -10px;
-    font-size: 20px;
-    animation: fall 5s linear infinite;
-    z-index: 9999;
-    pointer-events: none;
-}
-
-@keyframes fall {
-    to { transform: translateY(110vh); }
-}
-
-.fire {
-    position: fixed;
-    inset: 0;
-    background: black;
-    animation: flash 0.5s infinite alternate;
-    z-index: 10000;
-}
-
-@keyframes flash {
-    0% { background: black; }
-    50% { background: #ff0077; }
-    100% { background: black; }
-}
+.love { position: fixed; top: -10px; font-size: 20px; animation: fall 5s linear infinite; z-index: 9999; pointer-events: none; }
+@keyframes fall { to { transform: translateY(110vh); } }
+.fire { position: fixed; inset: 0; background: black; animation: flash 0.5s infinite alternate; z-index: 10000; }
+@keyframes flash { 0% { background: black; } 50% { background: #ff0077; } 100% { background: black; } }
 
 #start-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    color: gold;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10002;
-    text-align: center;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); color: gold; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10002; text-align: center;
 }
-
 #start-button {
-    padding: 15px 30px;
-    font-size: 24px;
-    background: goldenrod;
-    color: black;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 0 20px gold;
-    animation: pulse 1s infinite;
+    padding: 15px 30px; font-size: 24px; background: goldenrod; color: black; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0 0 20px gold; animation: pulse 1s infinite;
 }
 
-/* New style for the final photo on P5 */
+/* P5 Final Gift Styling */
 #p5-content {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* Hiding the elements initially for two-step reveal */
 #final-photo-container {
+    display: none; /* Hidden initially */
     margin-bottom: 20px;
     border: 5px solid goldenrod;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 0 20px gold;
+    cursor: pointer; /* Enable click on photo */
+}
+
+#final-message {
+    display: none; /* Hidden initially */
+    max-width: 300px;
+    padding: 15px;
+    margin-top: 20px;
+    border: 3px solid #ffdd00;
+    background: rgba(255, 221, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 0 10px #ffdd00;
 }
 
 #final-photo {
-    width: 200px; 
+    width: 200px;  
     height: 200px;
     object-fit: cover;
     display: block;
 }
 
+/* Style for the P5 initial Box (Gift 26) */
+#gift-26-box .front { 
+    background: linear-gradient(135deg, #ffc0cb, #ff69b4); 
+    color: white; 
+}
 </style>
+
 </head>
 
 <body>
@@ -218,16 +181,14 @@ h1, h2 {
 <div id="start-overlay">
     <h1>💛 Happy Birthday Bander! 💛</h1>
     <p>Jisne meri life ko special banaya uske liye special sa GIFT</p>
-    <button id="start-button"> DEKHNA HAI --  CLICK KARO... (Let's start) </button>
+    <button id="start-button"> DEKHNA HAI -- CLICK KARO... (Let's start) </button>
 </div>
-
 
 <audio id="audio_p1" loop src="song1.mp3"></audio>
 <audio id="audio_p2" loop src="song2.mp3"></audio>
 <audio id="audio_p3" loop src="song3.mp3"></audio>
 <audio id="audio_p4" loop src="song4.mp3"></audio>
 <audio id="audio_p5" loop src="song5.mp3"></audio>
-
 
 <section id="p1"> 
     <h1>🎂 Happy Birthday Bander 🎂</h1>
@@ -242,13 +203,11 @@ h1, h2 {
     <p style="margin-top:20px;">Cake par click karo 💨</p>
 </section>
 
-
 <section id="p2">
-    <h2>🎁 Special GIFTS for Precious ONE  🎁</h2>
+    <h2>🎁 Special GIFTS for Precious ONE 🎁</h2>
     <div id="g1" class="box-grid"></div>
     <div class="heart" onclick="showPage(3)"> आगे बढ़ो! ❤️</div>
 </section>
-
 
 <section id="p3">
     <h2>✨ Special moments for Special ONE✨</h2>
@@ -256,37 +215,37 @@ h1, h2 {
     <div class="heart" onclick="showPage(4)"> आख़िरी ख़ास चीज़ें! ❤️</div>
 </section>
 
-
 <section id="p4">
     <h2>💌 Special Birthday Wishes for YOU 🐒 (21-25) 💌</h2>
     <div id="wishes" class="box-grid"></div>
     <div class="heart" onclick="showPage(5)"> Secret Surprise ❤️</div>
 </section>
 
-
 <section id="p5">
     <h2>🎉 Most SPECIAL Moment 🎉</h2>
     
     <div id="p5-content">
-        <div id="final-photo-container">
+        <div class="box-container" id="gift-26-box">
+            <div class="box" onclick="revealPhoto()">
+                <div class="front">
+                    Open Final Gift!
+                </div>
+                <div class="back" style="background:none;"></div> 
+            </div>
+        </div>
+
+        <div id="final-photo-container" onclick="revealMessage()">
             <img id="final-photo" src="final.jpg" alt="Final Special Photo" onerror="this.onerror=null; this.src='error.png'; console.error('Final photo not found');">
         </div>
 
-        <div class="box-container">
-            <div class="box" onclick="finale()">
-                <div class="front" style="background:linear-gradient(135deg, #ffc0cb, #ff69b4); color:white;">
-                    Happy birthday Pagal 😘
-                </div>
-                <div class="back" style="background:#ffdd00;">
-                    <p style="font-size:16px; color:black; font-weight:bold; line-height:1.4;">
-                        Tum bahut kuchh karte ho sabke liye... Is birthday ek gift khud ko de lo 💝 <br> 
-                        Kuchh khud ke liye khud hi health khud ki khushi or khud ke sukoon ke liye kar lo 🥰 <br> 
-                        Thoda apna dhyan rakhna shuru kar lo mere pagal 🫶 <br> 
-                        Thankyou meri life me aakar itna special banane ke liye 🐵 <br> 
-                        🤍 HAPPY BIRTHDAY AGAIN 🤍
-                    </p>
-                </div>
-            </div>
+        <div id="final-message">
+             <p style="font-size:16px; color:gold; font-weight:bold; line-height:1.4;">
+                Tum bahut kuchh karte ho sabke liye... Is birthday ek gift khud ko de lo 💝 <br> 
+                Kuchh khud ke liye khud hi health khud ki khushi or khud ke sukoon ke liye kar lo 🥰 <br> 
+                Thoda apna dhyan rakhna shuru kar lo mere pagal 🫶 <br> 
+                Thankyou meri life me aakar itna special banane ke liye 🐵 <br> 
+                🤍 HAPPY BIRTHDAY AGAIN 🤍
+            </p>
         </div>
     </div>
 </section>
@@ -295,7 +254,7 @@ h1, h2 {
 <script>
 
 // --- CONFIGURATION START ---
-// **अपनी फ़ाइलें यहाँ अपडेट करें**
+
 const IMAGE_FILES_G1 = [
     "gift 1.jpg", "gift 2.jpg", "gift 3.jpg", "gift 4.jpg",
     "gift 5.jpg", "gift 6.jpg", "gift 7.jpg", "gift 8.jpg", 
@@ -308,8 +267,8 @@ const IMAGE_FILES_G2 = [
     "gift 19.jpg", "gift 20.jpg"
 ];
 
-// P5 Final Photo Name:
-document.getElementById('final-photo').src = "final.jpg"; // <--- **अपनी फ़ाइल का नाम यहाँ डालें**
+// P5 Final Photo Name (using 'final.jpg' as per your HTML)
+// Note: This is now handled directly in HTML, no need to overwrite here.
 
 const WISH_TEXTS = [
     "Tum meri life ke safest place ho, jahs mujhe sochna nahi padta ki mujhe kya result milega 💛",
@@ -354,18 +313,21 @@ function playAudioForPage(pageId) {
 }
 
 
-// FIX: This function now correctly handles the display property of sections
+// FIX 1: Enhanced showPage function for reliable switching
 function showPage(n) {
     const pageId = "p" + n;
     // Hide all sections first
     document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
     // Show only the target section
-    document.getElementById(pageId).classList.add("active");
-    playAudioForPage(pageId);
+    const targetSection = document.getElementById(pageId);
+    if (targetSection) {
+        targetSection.classList.add("active");
+        playAudioForPage(pageId);
+    }
 }
 
 
-// --- GIFT BOX CREATION (No Change Needed Here) ---
+// --- GIFT BOX CREATION ---
 function createGiftBox(i, containerId, imageUrl, isWish = false, wishText = "") {
     let container = document.getElementById(containerId);
     let boxContainer = document.createElement("div");
@@ -383,37 +345,44 @@ function createGiftBox(i, containerId, imageUrl, isWish = false, wishText = "") 
     back.className = "back";
     
     if (isWish) {
-        back.innerHTML = `<p style="font-size:14px; color:black;">${wishText}</p>`;
+        // FIX 2: Added event listener for wishes to show text without flip
+        front.onclick = (event) => {
+            event.currentTarget.textContent = wishText;
+            event.currentTarget.style.fontSize = '12px'; // Adjust size for long text
+            event.currentTarget.style.cursor = 'default';
+            startLoveRain();
+        };
+        back.style.display = 'none'; // Hide back for wish boxes
     } else {
+        // Photo Boxes
         back.innerHTML = `<img src="${imageUrl}" alt="Gift ${i} Photo" onerror="this.onerror=null; this.src='error.png'; console.error('Image not found: ${imageUrl}')">`;
+         // Box Click/Flip Logic for photo boxes
+        front.onclick = () => {
+            if (!box.classList.contains("flipped")) {
+                box.classList.add("flipped");
+                startLoveRain();
+            }
+        };
     }
-
+    
     box.appendChild(front);
     box.appendChild(back);
     boxContainer.appendChild(box);
     container.appendChild(boxContainer);
-
-    // Box Click/Flip Logic
-    box.onclick = () => {
-        if (!box.classList.contains("flipped")) {
-            box.classList.add("flipped");
-            startLoveRain();
-        }
-    };
 }
 
 
-// Populate Gifts 1-10
+// Populate Gifts 1-10 (Photo Boxes)
 for (let i = 1; i <= 10; i++) {
     createGiftBox(i, 'g1', IMAGE_FILES_G1[i-1]);
 }
 
-// Populate Gifts 11-20
+// Populate Gifts 11-20 (Photo Boxes)
 for (let i = 11; i <= 20; i++) {
     createGiftBox(i, 'g2', IMAGE_FILES_G2[i-11]);
 }
 
-// Populate Wishes 21-25
+// Populate Wishes 21-25 (Text Boxes - No Flip)
 for (let i = 21; i <= 25; i++) {
     createGiftBox(i, 'wishes', '', true, WISH_TEXTS[i-21]);
 }
@@ -427,18 +396,37 @@ const cake = document.getElementById('cake');
 // Handle the user click to start everything
 startButton.onclick = () => {
     startOverlay.style.display = 'none';
-    document.getElementById("p1").classList.add("active");
-    playAudioForPage('p1');
+    showPage(1); // Use showPage(1) to start
 };
 
 // Cake click logic to move to P2
 cake.onclick = () => {
     document.querySelector(".flame").classList.add("blow");
     audioPlayers.p1.pause(); 
-    // FIX: Using showPage(2) to ensure the music and page change correctly
     setTimeout(() => showPage(2), 1500); 
 };
 
+
+// --- FINAL PAGE (P5) LOGIC ---
+const finalBoxContainer = document.getElementById('gift-26-box');
+const finalPhotoContainer = document.getElementById('final-photo-container');
+const finalMessage = document.getElementById('final-message');
+
+// FIX 3: Step 1: Open Gift Box -> Reveal Photo
+function revealPhoto() {
+    finalBoxContainer.style.display = 'none'; // Hide initial box
+    finalPhotoContainer.style.display = 'block'; // Show photo
+    startLoveRain();
+}
+
+// FIX 3: Step 2: Click Photo -> Reveal Message
+function revealMessage() {
+    finalMessage.style.display = 'block'; // Show the final message
+    finalPhotoContainer.onclick = finale; // Next click on photo triggers firework
+    // Optional: Change photo container style to indicate next action is FINALE
+    finalPhotoContainer.style.cursor = 'default';
+    finalPhotoContainer.style.borderColor = 'red';
+}
 
 // --- LOVE RAIN EFFECT ---
 let rainInterval;
@@ -464,7 +452,7 @@ function startLoveRain() {
 }
 
 
-// --- FINAL PAGE LOGIC ---
+// --- FINAL FINALE (Firework) LOGIC ---
 function finale() {
     audioPlayers.p5.pause(); 
     
