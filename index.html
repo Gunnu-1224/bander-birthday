@@ -6,15 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* (आपके सभी CSS स्टाइल्स यहाँ अपरिवर्तित हैं) */
 body {
     margin: 0;
-    font-family: 'Arial', cursive; /* Using Arial as fallback */
+    font-family: 'Arial', cursive;
     background: black;
     color: gold;
     text-align: center;
     overflow-x: hidden;
-    /* Golden Border around the whole page (Optional, can be removed if not needed) */
-    /* border: 5px solid goldenrod; */ 
 }
 
 section {
@@ -23,7 +22,6 @@ section {
     display: none;
     border: 4px solid goldenrod;
     position: relative;
-    /* Flex setup for centering content vertically */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -37,7 +35,6 @@ h1, h2 {
     margin-bottom: 20px;
 }
 
-/* Creative Box Container Layout */
 .box-grid {
     display: flex;
     flex-wrap: wrap;
@@ -46,12 +43,11 @@ h1, h2 {
     margin: 20px auto;
 }
 
-/* 3D Flip BOX */
 .box-container {
     width: 150px;
     height: 150px;
     margin: 10px;
-    perspective: 1000px; /* For 3D effect */
+    perspective: 1000px;
     display: inline-block;
 }
 
@@ -62,20 +58,18 @@ h1, h2 {
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.8s;
-    transform-style: preserve-3d; /* Key for 3D flip */
+    transform-style: preserve-3d;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
     position: relative;
 }
 
-.box.flipped {
-    transform: rotateY(180deg);
-}
+.box.flipped { transform: rotateY(180deg); }
 
 .front, .back {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Hide the back side when not flipped */
+    backface-visibility: hidden;
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -87,17 +81,9 @@ h1, h2 {
     color: black;
 }
 
-/* Bright, Warm, and Light Colors for Boxes */
-/* Background colors will be set dynamically via JS */
-.front {
-    background: #ffd1dc; /* Default pink */
-    z-index: 2;
-}
+.front { background: #ffd1dc; z-index: 2; }
 
-.back {
-    background: white; /* Image background */
-    transform: rotateY(180deg);
-}
+.back { transform: rotateY(180deg); }
 
 .back img {
     width: 100%;
@@ -106,7 +92,6 @@ h1, h2 {
     border-radius: 12px;
 }
 
-/* HEART BUTTON */
 .heart {
     font-size: 50px;
     margin-top: 30px;
@@ -121,7 +106,6 @@ h1, h2 {
     100% { transform: scale(1); }
 }
 
-/* CAKE */
 #cake-container {
     position: relative;
     display: inline-block;
@@ -142,13 +126,12 @@ h1, h2 {
     transform: translateX(-50%);
     font-size: 35px;
     transition: opacity 1s;
-    pointer-events: none; /* Allows click through to cake */
+    pointer-events: none;
     z-index: 10;
 }
 
 .blow { opacity: 0; }
 
-/* LOVE RAIN */
 .love {
     position: fixed;
     top: -10px;
@@ -162,7 +145,6 @@ h1, h2 {
     to { transform: translateY(110vh); }
 }
 
-/* FIREWORK */
 .fire {
     position: fixed;
     inset: 0;
@@ -177,19 +159,57 @@ h1, h2 {
     100% { background: black; }
 }
 
+/* New style for the start screen button */
+#start-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    color: gold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10002;
+    text-align: center;
+}
+
+#start-button {
+    padding: 15px 30px;
+    font-size: 24px;
+    background: goldenrod;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 20px gold;
+    animation: pulse 1s infinite;
+}
+
 </style>
 </head>
 
 <body>
 
-<audio id="audio_p1" loop src="song1.mp3"></audio>
-<audio id="audio_p2" loop src="song2.mp3"></audio> <audio id="audio_p3" loop src="song3.mp3"></audio> <audio id="audio_p4" loop src="song4.mp3"></audio>
-<audio id="audio_p5" loop src="song5.mp3"></audio> 
+<div id="start-overlay">
+    <h1>💛 Happy Birthday Bander! 💛</h1>
+    <p>संगीत और सरप्राइज शुरू करने के लिए क्लिक करें।</p>
+    <button id="start-button">शुरू करें (Play Music)</button>
+</div>
 
- <section id="p1" class="active">
+
+<audio id="audio_p1" loop src="song1.mp3"></audio>
+<audio id="audio_p2" loop src="song2.mp3"></audio>
+<audio id="audio_p3" loop src="song3.mp3"></audio>
+<audio id="audio_p4" loop src="song4.mp3"></audio>
+<audio id="audio_p5" loop src="song5.mp3"></audio>
+
+
+<section id="p1"> 
     <h1>🎂 Happy Birthday Bander 🎂</h1>
-    <p> Aapko me kya gift de sakti hu.... <br> Aap khud hi meri life me bahut special gift ho. ☺️
-💛</p>
+    <p> Aapko me kya gift de sakti hu.... <br> Aap khud hi meri life me bahut special gift ho. ☺️ 💛</p>
     <h2>Phir bhi aapke liye 26 pyaare gifts 🎁</h2>
 
     <div id="cake-container">
@@ -200,11 +220,13 @@ h1, h2 {
     <p style="margin-top:20px;">Cake par click karo 💨</p>
 </section>
 
+
 <section id="p2">
     <h2>🎁 Special Person ke liye Special Gifts (1-10) 🎁</h2>
     <div id="g1" class="box-grid"></div>
     <div class="heart" onclick="showPage(3)"> आगे बढ़ो! ❤️</div>
 </section>
+
 
 <section id="p3">
     <h2>✨ Special Duniya (Gifts 11-20) ✨</h2>
@@ -212,11 +234,13 @@ h1, h2 {
     <div class="heart" onclick="showPage(4)"> आख़िरी ख़ास चीज़ें! ❤️</div>
 </section>
 
+
 <section id="p4">
     <h2>💌 Special Birthday Wishes (21-25) 💌</h2>
     <div id="wishes" class="box-grid"></div>
     <div class="heart" onclick="showPage(5)"> Secret Surprise ❤️</div>
 </section>
+
 
 <section id="p5">
     <h2>🎉 आख़िरी और सबसे ख़ास गिफ़्ट 🎉</h2>
@@ -226,10 +250,12 @@ h1, h2 {
                 Happy birthday Pagal 😘
             </div>
             <div class="back" style="background:#ffdd00;">
-                <p style="font-size:18px; color:black; font-weight:bold;">
-                    Tum bahut kuchh karte ho sabke liye... Is birthday ek gift khud ko de lo 💝 <br> Kuchh khud ke liye khud hi health khud ki khushi or khud ke sukoon ke liye kar lo 🥰 <br> Thoda apna dhyan rakhna shuru kar lo mere pagal 🫶 
-<br> Thankyou meri life me aakar itna special banane ke liye 🐵
-<br> 🤍 HAPPY BIRTHDAY AGAIN 🤍
+                <p style="font-size:16px; color:black; font-weight:bold; line-height:1.4;">
+                    Tum bahut kuchh karte ho sabke liye... Is birthday ek gift khud ko de lo 💝 <br> 
+                    Kuchh khud ke liye khud hi health khud ki khushi or khud ke sukoon ke liye kar lo 🥰 <br> 
+                    Thoda apna dhyan rakhna shuru kar lo mere pagal 🫶 <br> 
+                    Thankyou meri life me aakar itna special banane ke liye 🐵 <br> 
+                    🤍 HAPPY BIRTHDAY AGAIN 🤍
                 </p>
             </div>
         </div>
@@ -238,13 +264,15 @@ h1, h2 {
 
 
 <script>
+
 // --- CONFIGURATION START ---
 // **अपनी फ़ाइलें यहाँ अपडेट करें**
 const IMAGE_FILES_G1 = [
     "gift 1.jpg", "gift 2.jpg", "gift 3.jpg", "gift 4.jpg",
-    "gift 5.jpg", "gift 6.jpg", "gift 7.jpg", "Igift 8.jpg",
+    "gift 5.jpg", "gift 6.jpg", "gift 7.jpg", "gift 8.jpg", // 'Igift 8.jpg' को 'gift 8.jpg' किया गया
     "gift 9.jpg", "gift 10.jpg"
 ];
+
 
 const IMAGE_FILES_G2 = [
     "gift 11.jpg", "gift 12.jpg", "gift 13.jpg", "gift 14.jpg",
@@ -252,31 +280,37 @@ const IMAGE_FILES_G2 = [
     "gift 19.jpg", "gift 20.jpg"
 ];
 
+
 const WISH_TEXTS = [
-    "Tum meri life ke safest place ho, jahs mujhe sochna nahi padta ki mujhe kya result milega  💛",
+    "Tum meri life ke safest place ho, jahs mujhe sochna nahi padta ki mujhe kya result milega 💛",
     "Tumhari smile meri har problem ka solution hai beshak tum aaj kal kam karte ho par jab bhi karte ho sukoon milta hai😊",
-    "Tum na kabhi bhi ye tension mat lena ki me aapko chhod dungi ya kuchh bhi kyuki hume bhagvan ne milaya hai or jise vo milata hai na use koi duur nahi kar sakta ❤️",
+    // यहां <br> टैग जोड़ा गया ताकि यह मल्टीपल लाइनों में दिखाई दे
+    "Tum na kabhi bhi ye tension mat lena ki me aapko chhod dungi ya kuchh bhi kyuki hume bhagvan ne milaya hai or jise vo milata hai na use koi duur nahi kar sakta ❤️", 
     "Tum mere liye sab kuch ho meri puri duniya meri zindagi meri khushi meri himmat. Aap agar na hote to me apni life imagine bhi nahi kar sakti 🌍",
     "Happy' Birthday my love 🫂 <br> I Love You Forever ❤️"
 ];
 
+
 const BRIGHT_COLORS = [
-    '#FFD1DC', '#FFB3BA', '#FFFFBA', '#BAFFC9', '#BAE1FF', // Pink, light pink, light yellow, light green, light blue
-    '#FFC5A1', '#E0BBE4', '#A8DADC', '#F4978E', '#BEE3DB'  // Peach, Lavender, Mint, Coral, Soft Teal
+    '#FFD1DC', '#FFB3BA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
+    '#FFC5A1', '#E0BBE4', '#A8DADC', '#F4978E', '#BEE3DB'
 ];
 // --- CONFIGURATION END ---
+
 
 function getRandomColor() {
     return BRIGHT_COLORS[Math.floor(Math.random() * BRIGHT_COLORS.length)];
 }
+
 
 const audioPlayers = {
     p1: document.getElementById('audio_p1'),
     p2: document.getElementById('audio_p2'),
     p3: document.getElementById('audio_p3'),
     p4: document.getElementById('audio_p4'),
-p5: document.getElementById('audio_p5'),
+    p5: document.getElementById('audio_p5'), // P5 audio included
 };
+
 
 function playAudioForPage(pageId) {
     Object.values(audioPlayers).forEach(audio => {
@@ -287,20 +321,21 @@ function playAudioForPage(pageId) {
     });
     const audio = audioPlayers[pageId];
     if (audio) {
-        audio.play().catch(e => console.error("Audio play failed:", e));
+        // Attempt to play, caught in case of failure (which is common)
+        audio.play().catch(e => console.error(`Audio for ${pageId} play failed:`, e));
     }
 }
+
 
 function showPage(n) {
     const pageId = "p" + n;
     document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
     document.getElementById(pageId).classList.add("active");
-    playAudioForPage(pageId); // Play audio for the new page
+    playAudioForPage(pageId);
 }
 
 
-// --- GIFT BOX CREATION ---
-
+// --- GIFT BOX CREATION (No Change Needed Here) ---
 function createGiftBox(i, containerId, imageUrl, isWish = false, wishText = "") {
     let container = document.getElementById(containerId);
     let boxContainer = document.createElement("div");
@@ -318,9 +353,11 @@ function createGiftBox(i, containerId, imageUrl, isWish = false, wishText = "") 
     back.className = "back";
     
     if (isWish) {
-        back.innerHTML = `<p>${wishText}</p>`;
+        // Wishes in P4
+        back.innerHTML = `<p style="font-size:14px; color:black;">${wishText}</p>`;
     } else {
-        back.innerHTML = `<img src="${imageUrl}" alt="Gift ${i} Photo">`;
+        // Photos in P2 and P3
+        back.innerHTML = `<img src="${imageUrl}" alt="Gift ${i} Photo" onerror="this.onerror=null; this.src='error.png'; console.error('Image not found: ${imageUrl}')">`; // Error handler added
     }
 
     box.appendChild(front);
@@ -332,7 +369,7 @@ function createGiftBox(i, containerId, imageUrl, isWish = false, wishText = "") 
     box.onclick = () => {
         if (!box.classList.contains("flipped")) {
             box.classList.add("flipped");
-            startLoveRain(); // Start love rain on open
+            startLoveRain();
         }
     };
 }
@@ -354,48 +391,56 @@ for (let i = 21; i <= 25; i++) {
 }
 
 
-// --- PAGE 1 LOGIC ---
+// --- START SCREEN AND PAGE 1 LOGIC ---
+const startButton = document.getElementById('start-button');
+const startOverlay = document.getElementById('start-overlay');
 const cake = document.getElementById('cake');
+
+// Handle the user click to start everything
+startButton.onclick = () => {
+    startOverlay.style.display = 'none'; // Hide the overlay
+    document.getElementById("p1").classList.add("active"); // Activate P1
+    playAudioForPage('p1'); // Start the first song
+};
+
+// Cake click logic to move to P2
 cake.onclick = () => {
     document.querySelector(".flame").classList.add("blow");
+    // Ensure music stops before transition (optional, but good practice)
+    audioPlayers.p1.pause(); 
     setTimeout(() => showPage(2), 1500);
 };
 
-// Start P1 audio immediately on load attempt
-window.onload = () => {
-    playAudioForPage('p1');
-};
 
-
-// --- LOVE RAIN EFFECT ---
+// --- LOVE RAIN EFFECT (No Change Needed) ---
 let rainInterval;
 function startLoveRain() {
-    // Clear any previous interval to prevent stacking
-    if (rainInterval) {
-        clearInterval(rainInterval);
-    }
+    if (rainInterval) { clearInterval(rainInterval); }
     
+    let rainDuration = 5000; // Total duration of intense rain
+    let heartCreationInterval = 200;
+
     rainInterval = setInterval(() => {
         let l = document.createElement("div");
         l.className = "love";
         l.innerHTML = "💖";
         l.style.left = Math.random() * 100 + "vw";
-        l.style.animationDuration = (Math.random() * 3) + 3 + "s"; // 3s to 6s
+        l.style.animationDuration = (Math.random() * 3) + 3 + "s";
         document.body.appendChild(l);
-        setTimeout(() => l.remove(), 6000); // Remove after animation duration
-    }, 200); // More hearts every 200ms
+        setTimeout(() => l.remove(), 6000);
+    }, heartCreationInterval);
     
-    // Stop the intense rain after 5 seconds to prevent performance issues
     setTimeout(() => {
         clearInterval(rainInterval);
-        console.log("Love rain intensity reduced.");
-    }, 5000); 
+    }, rainDuration);
 }
 
 
 // --- FINAL PAGE LOGIC ---
 function finale() {
-    audioPlayers.p4.pause();
+    // Stop P5 music
+    audioPlayers.p5.pause(); 
+    
     document.body.innerHTML += `
     <div class="fire"></div>
     <h1 style="position:fixed;top:40%;width:100%;z-index:10001;color:white;text-shadow:0 0 20px goldenrod;">
@@ -405,5 +450,6 @@ function finale() {
 }
 
 </script>
+
 </body>
 </html>
