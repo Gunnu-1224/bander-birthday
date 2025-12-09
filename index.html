@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Bander 💛</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Arial', cursive; /* Using Arial as fallback */
+    background: black;
+    color: gold;
+    text-align: center;
+    overflow-x: hidden;
+    /* Golden Border around the whole page (Optional, can be removed if not needed) */
+    /* border: 5px solid goldenrod; */ 
+}
+
+section {
+    min-height: 100vh;
+    padding: 30px 10px;
+    display: none;
+    border: 4px solid goldenrod;
+    position: relative;
+    /* Flex setup for centering content vertically */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+section.active { display: flex; }
+
+h1, h2 {
+    text-shadow: 0 0 15px gold;
+    margin-bottom: 20px;
+}
+
+/* Creative Box Container Layout */
+.box-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* 3D Flip BOX */
+.box-container {
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    perspective: 1000px; /* For 3D effect */
+    display: inline-block;
+}
+
+.box {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.8s;
+    transform-style: preserve-3d; /* Key for 3D flip */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+
+.box.flipped {
+    transform: rotateY(180deg);
+}
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hide the back side when not flipped */
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 3px solid #fff;
+    color: black;
+}
+
+/* Bright, Warm, and Light Colors for Boxes */
+/* Background colors will be set dynamically via JS */
+.front {
+    background: #ffd1dc; /* Default pink */
+    z-index: 2;
+}
+
+.back {
+    background: white; /* Image background */
+    transform: rotateY(180deg);
+}
+
+.back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* HEART BUTTON */
+.heart {
+    font-size: 50px;
+    margin-top: 30px;
+    cursor: pointer;
+    animation: pulse 1s infinite;
+    text-shadow: 0 0 10px red;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* CAKE */
+#cake-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#cake {
+    width: 250px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    border-radius: 50%;
+}
+
+.flame {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 35px;
+    transition: opacity 1s;
+    pointer-events: none; /* Allows click through to cake */
+    z-index: 10;
+}
+
+.blow { opacity: 0; }
+
+/* LOVE RAIN */
+.love {
+    position: fixed;
+    top: -10px;
+    font-size: 20px;
+    animation: fall 5s linear infinite;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+/* FIREWORK */
+.fire {
+    position: fixed;
+    inset: 0;
+    background: black;
+    animation: flash 0.5s infinite alternate;
+    z-index: 10000;
+}
+
+@keyframes flash {
+    0% { background: black; }
+    50% { background: #ff0077; }
+    100% { background: black; }
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="audio_p1" loop src="song1.mp3"></audio>
+<audio id="audio_p2" loop src="song2.mp3"></audio> <audio id="audio_p3" loop src="song3.mp3"></audio> <audio id="audio_p4" loop src="song4.mp3"></audio>
+<audio id="audio_p5" loop src="song5.mp3"></audio> 
+
+ <section id="p1" class="active">
+    <h1>🎂 Happy Birthday Bander 🎂</h1>
+    <p> Aapko me kya gift de sakti hu.... <br> Aap khud hi meri life me bahut special gift ho. ☺️
+💛</p>
+    <h2>Phir bhi aapke liye 26 pyaare gifts 🎁</h2>
+
+    <div id="cake-container">
+        <img id="cake" src="cake.jpg" alt="Birthday Cake">
+        <div class="flame">🔥</div>
+    </div>
+
+    <p style="margin-top:20px;">Cake par click karo 💨</p>
+</section>
+
+<section id="p2">
+    <h2>🎁 Special Person ke liye Special Gifts (1-10) 🎁</h2>
+    <div id="g1" class="box-grid"></div>
+    <div class="heart" onclick="showPage(3)"> आगे बढ़ो! ❤️</div>
+</section>
+
+<section id="p3">
+    <h2>✨ Special Duniya (Gifts 11-20) ✨</h2>
+    <div id="g2" class="box-grid"></div>
+    <div class="heart" onclick="showPage(4)"> आख़िरी ख़ास चीज़ें! ❤️</div>
+</section>
+
+<section id="p4">
+    <h2>💌 Special Birthday Wishes (21-25) 💌</h2>
+    <div id="wishes" class="box-grid"></div>
+    <div class="heart" onclick="showPage(5)"> Secret Surprise ❤️</div>
+</section>
+
+<section id="p5">
+    <h2>🎉 आख़िरी और सबसे ख़ास गिफ़्ट 🎉</h2>
+    <div class="box-container">
+        <div class="box" onclick="finale()">
+            <div class="front" style="background:linear-gradient(135deg, #ffc0cb, #ff69b4); color:white;">
+                Happy birthday Pagal 😘
+            </div>
+            <div class="back" style="background:#ffdd00;">
+                <p style="font-size:18px; color:black; font-weight:bold;">
+                    Tum bahut kuchh karte ho sabke liye... Is birthday ek gift khud ko de lo 💝 <br> Kuchh khud ke liye khud hi health khud ki khushi or khud ke sukoon ke liye kar lo 🥰 <br> Thoda apna dhyan rakhna shuru kar lo mere pagal 🫶 
+<br> Thankyou meri life me aakar itna special banane ke liye 🐵
+<br> 🤍 HAPPY BIRTHDAY AGAIN 🤍
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+// --- CONFIGURATION START ---
+// **अपनी फ़ाइलें यहाँ अपडेट करें**
+const IMAGE_FILES_G1 = [
+    "gift 1.jpg", "gift 2.jpg", "gift 3.jpg", "gift 4.jpg",
+    "gift 5.jpg", "gift 6.jpg", "gift 7.jpg", "Igift 8.jpg",
+    "gift 9.jpg", "gift 10.jpg"
+];
+
+const IMAGE_FILES_G2 = [
+    "gift 11.jpg", "gift 12.jpg", "gift 13.jpg", "gift 14.jpg",
+    "gift 15.jpg", "gift 16.jpg", "gift 17.jpg", "gift 18.jpg",
+    "gift 19.jpg", "gift 20.jpg"
+];
+
+const WISH_TEXTS = [
+    "Tum meri life ke safest place ho, jahs mujhe sochna nahi padta ki mujhe kya result milega  💛",
+    "Tumhari smile meri har problem ka solution hai beshak tum aaj kal kam karte ho par jab bhi karte ho sukoon milta hai😊",
+    "Tum na kabhi bhi ye tension mat lena ki me aapko chhod dungi ya kuchh bhi kyuki hume bhagvan ne milaya hai or jise vo milata hai na use koi duur nahi kar sakta ❤️",
+    "Tum mere liye sab kuch ho meri puri duniya meri zindagi meri khushi meri himmat. Aap agar na hote to me apni life imagine bhi nahi kar sakti 🌍",
+    "Happy' Birthday my love 🫂 <br> I Love You Forever ❤️"
+];
+
+const BRIGHT_COLORS = [
+    '#FFD1DC', '#FFB3BA', '#FFFFBA', '#BAFFC9', '#BAE1FF', // Pink, light pink, light yellow, light green, light blue
+    '#FFC5A1', '#E0BBE4', '#A8DADC', '#F4978E', '#BEE3DB'  // Peach, Lavender, Mint, Coral, Soft Teal
+];
+// --- CONFIGURATION END ---
+
+function getRandomColor() {
+    return BRIGHT_COLORS[Math.floor(Math.random() * BRIGHT_COLORS.length)];
+}
+
+const audioPlayers = {
+    p1: document.getElementById('audio_p1'),
+    p2: document.getElementById('audio_p2'),
+    p3: document.getElementById('audio_p3'),
+    p4: document.getElementById('audio_p4'),
+p5: document.getElementById('audio_p5'),
+};
+
+function playAudioForPage(pageId) {
+    Object.values(audioPlayers).forEach(audio => {
+        if (audio && !audio.paused) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+    });
+    const audio = audioPlayers[pageId];
+    if (audio) {
+        audio.play().catch(e => console.error("Audio play failed:", e));
+    }
+}
+
+function showPage(n) {
+    const pageId = "p" + n;
+    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+    document.getElementById(pageId).classList.add("active");
+    playAudioForPage(pageId); // Play audio for the new page
+}
+
+
+// --- GIFT BOX CREATION ---
+
+function createGiftBox(i, containerId, imageUrl, isWish = false, wishText = "") {
+    let container = document.getElementById(containerId);
+    let boxContainer = document.createElement("div");
+    boxContainer.className = "box-container";
+
+    let box = document.createElement("div");
+    box.className = "box";
+
+    let front = document.createElement("div");
+    front.className = "front";
+    front.textContent = isWish ? "Gift "+i+": Open Wish" : "Gift " + i;
+    front.style.backgroundColor = getRandomColor();
+
+    let back = document.createElement("div");
+    back.className = "back";
+    
+    if (isWish) {
+        back.innerHTML = `<p>${wishText}</p>`;
+    } else {
+        back.innerHTML = `<img src="${imageUrl}" alt="Gift ${i} Photo">`;
+    }
+
+    box.appendChild(front);
+    box.appendChild(back);
+    boxContainer.appendChild(box);
+    container.appendChild(boxContainer);
+
+    // Box Click/Flip Logic
+    box.onclick = () => {
+        if (!box.classList.contains("flipped")) {
+            box.classList.add("flipped");
+            startLoveRain(); // Start love rain on open
+        }
+    };
+}
+
+
+// Populate Gifts 1-10
+for (let i = 1; i <= 10; i++) {
+    createGiftBox(i, 'g1', IMAGE_FILES_G1[i-1]);
+}
+
+// Populate Gifts 11-20
+for (let i = 11; i <= 20; i++) {
+    createGiftBox(i, 'g2', IMAGE_FILES_G2[i-11]);
+}
+
+// Populate Wishes 21-25
+for (let i = 21; i <= 25; i++) {
+    createGiftBox(i, 'wishes', '', true, WISH_TEXTS[i-21]);
+}
+
+
+// --- PAGE 1 LOGIC ---
+const cake = document.getElementById('cake');
+cake.onclick = () => {
+    document.querySelector(".flame").classList.add("blow");
+    setTimeout(() => showPage(2), 1500);
+};
+
+// Start P1 audio immediately on load attempt
+window.onload = () => {
+    playAudioForPage('p1');
+};
+
+
+// --- LOVE RAIN EFFECT ---
+let rainInterval;
+function startLoveRain() {
+    // Clear any previous interval to prevent stacking
+    if (rainInterval) {
+        clearInterval(rainInterval);
+    }
+    
+    rainInterval = setInterval(() => {
+        let l = document.createElement("div");
+        l.className = "love";
+        l.innerHTML = "💖";
+        l.style.left = Math.random() * 100 + "vw";
+        l.style.animationDuration = (Math.random() * 3) + 3 + "s"; // 3s to 6s
+        document.body.appendChild(l);
+        setTimeout(() => l.remove(), 6000); // Remove after animation duration
+    }, 200); // More hearts every 200ms
+    
+    // Stop the intense rain after 5 seconds to prevent performance issues
+    setTimeout(() => {
+        clearInterval(rainInterval);
+        console.log("Love rain intensity reduced.");
+    }, 5000); 
+}
+
+
+// --- FINAL PAGE LOGIC ---
+function finale() {
+    audioPlayers.p4.pause();
+    document.body.innerHTML += `
+    <div class="fire"></div>
+    <h1 style="position:fixed;top:40%;width:100%;z-index:10001;color:white;text-shadow:0 0 20px goldenrod;">
+    🎆 Happy Birthday Meri Jaan 🎆<br>
+    I Love You Always 💛
+    </h1>`;
+}
+
+</script>
+</body>
+</html>
