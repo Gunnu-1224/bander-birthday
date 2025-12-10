@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Bander 💛</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, cursive;
+    background:black;
+    color:gold;
+    text-align:center;
+    overflow-x:hidden;
+}
+
+/* ✅ ONLY ACTIVE PAGE SHOW */
+section{
+    min-height:100vh;
+    padding:30px 10px;
+    border:4px solid goldenrod;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+section.active{
+    display:flex;
+}
+
+h1,h2{
+    text-shadow:0 0 15px gold;
+}
+
+.box-grid{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    max-width:800px;
+    margin:auto;
+}
+
+.box-container{
+    width:150px;
+    height:150px;
+    margin:10px;
+    perspective:1000px;
+}
+
+.box{
+    width:100%;
+    height:100%;
+    border-radius:15px;
+    cursor:pointer;
+    transform-style:preserve-3d;
+    transition:0.8s;
+}
+
+.box.flipped{
+    transform:rotateY(180deg);
+}
+
+.front,.back{
+    position:absolute;
+    width:100%;
+    height:100%;
+    backface-visibility:hidden;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px;
+    box-sizing:border-box;
+    border:3px solid white;
+    color:black;
+}
+
+.front{background:#ffd1dc;}
+.back{transform:rotateY(180deg);background:#fff;}
+
+.back img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.heart{
+    font-size:50px;
+    margin-top:30px;
+    cursor:pointer;
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+    50%{transform:scale(1.2);}
+}
+
+#cake{
+    width:250px;
+    cursor:pointer;
+    border-radius:50%;
+    box-shadow:0 0 20px gold;
+}
+
+#start-overlay{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:10000;
+}
+
+#start-button{
+    padding:15px 30px;
+    font-size:22px;
+    background:goldenrod;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.love{
+    position:fixed;
+    top:-10px;
+    font-size:22px;
+    animation:fall 5s linear;
+}
+
+@keyframes fall{
+    to{transform:translateY(110vh);}
+}
+
+.fire{
+    position:fixed;
+    inset:0;
+    animation:flash 0.5s infinite alternate;
+    z-index:9999;
+}
+
+@keyframes flash{
+    50%{background:#ff0077;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="start-overlay">
+    <h1>💛 Happy Birthday Bander 💛</h1>
+    <p>Jisne meri life ko special banaya 💛</p>
+    <button id="start-button">CLICK KARO</button>
+</div>
+
+<audio id="audio_p1" src="song1.mp3" loop></audio>
+<audio id="audio_p2" src="song2.mp3" loop></audio>
+<audio id="audio_p3" src="song3.mp3" loop></audio>
+<audio id="audio_p4" src="song4.mp3" loop></audio>
+<audio id="audio_p5" src="song5.mp3" loop></audio>
+
+<!-- PAGE 1 -->
+<section id="p1">
+<h1>🎂 Happy Birthday Bander 🎂</h1>
+<p>Aap meri life ka sabse special gift ho 💛</p>
+<img id="cake" src="cake.jpg" alt="Cake">
+<p>Cake par tap karo 🎂</p>
+</section>
+
+<!-- PAGE 2 -->
+<section id="p2">
+<h2>🎁 Gifts 1-10 🎁</h2>
+<div id="g1" class="box-grid"></div>
+<div class="heart" onclick="showPage(3)">❤️</div>
+</section>
+
+<!-- PAGE 3 -->
+<section id="p3">
+<h2>✨ Moments 11-20 ✨</h2>
+<div id="g2" class="box-grid"></div>
+<div class="heart" onclick="showPage(4)">❤️</div>
+</section>
+
+<!-- PAGE 4 -->
+<section id="p4">
+<h2>💌 Wishes 💌</h2>
+<div id="wishes" class="box-grid"></div>
+<div class="heart" onclick="showPage(5)">❤️</div>
+</section>
+
+<!-- PAGE 5 -->
+<section id="p5">
+<h2>🎉 MOST SPECIAL 🎉</h2>
+<div class="box-container">
+<div class="box" onclick="finale()">
+<div class="front">Happy Birthday Pagal 😘</div>
+<div class="back">
+Tum meri duniya ho 🫶<br>
+Hamesha khush rehna 💛
+</div>
+</div>
+</div>
+</section>
+
+<script>
+const audio={
+p1:audio_p1,p2:audio_p2,p3:audio_p3,p4:audio_p4,p5:audio_p5
+};
+
+function play(id){
+Object.values(audio).forEach(a=>{a.pause();a.currentTime=0});
+audio[id].play();
+}
+
+function showPage(n){
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+const id="p"+n;
+document.getElementById(id).classList.add("active");
+play(id);
+}
+
+startButton.onclick=()=>{
+startOverlay.style.display="none";
+showPage(1);
+};
+
+cake.onclick=()=>showPage(2);
+
+function createBox(i,container,img){
+const c=document.getElementById(container);
+const b=document.createElement("div");
+b.className="box-container";
+b.innerHTML=`
+<div class="box">
+<div class="front">Gift ${i}</div>
+<div class="back"><img src="${img}"></div>
+</div>`;
+c.appendChild(b);
+b.querySelector(".box").onclick=()=>love();
+}
+
+for(let i=1;i<=10;i++)createBox(i,"g1",`gift ${i}.jpg`);
+for(let i=11;i<=20;i++)createBox(i,"g2",`gift ${i}.jpg`);
+
+["Tum meri duniya ho 💛","I love you 🫶","Happy Birthday jaan ❤️","Forever together 🐵","Always yours 💫"]
+.forEach((t,i)=>{
+const d=document.createElement("div");
+d.className="box-container";
+d.innerHTML=`<div class="box"><div class="front">Wish ${i+21}</div><div class="back">${t}</div></div>`;
+wishes.appendChild(d);
+});
+
+function love(){
+for(let i=0;i<10;i++){
+const l=document.createElement("div");
+l.className="love";
+l.innerHTML="💖";
+l.style.left=Math.random()*100+"vw";
+document.body.appendChild(l);
+setTimeout(()=>l.remove(),5000);
+}
+}
+
+function finale(){
+document.body.innerHTML+=`
+<div class="fire"></div>
+<h1 style="position:fixed;top:40%;width:100%;z-index:10000;">
+🎆 HAPPY BIRTHDAY MERI JAAN 🎆<br>I LOVE YOU 💛
+</h1>`;
+}
+</script>
+
+</body>
+</html>
