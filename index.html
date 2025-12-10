@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* (आपका CSS यहाँ वही है जो आपने पहले दिया था) */
+/* --- BASE STYLES --- */
 body {
     margin: 0;
     font-family: 'Arial', cursive;
@@ -16,56 +16,53 @@ body {
     overflow-x: hidden;
 }
 
+/* FIX: Ensure only one section is visible at a time */
 section {
     min-height: 100vh;
     padding: 30px 10px;
-    display: none;
+    /* Important: Start with display: none for all sections */
+    display: none; 
     border: 4px solid goldenrod;
     position: relative;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
 /* FIX: Ensure 'section.active' correctly displays the current page */
-section.active { display: flex; } 
+section.active { 
+    display: flex; 
+} 
 
 h1, h2 {
     text-shadow: 0 0 15px gold;
     margin-bottom: 20px;
 }
 
+/* --- GIFT GRID LAYOUT (2x2) --- */
 .box-grid {
-    /* FIX 1: Gift boxes to display in 2 columns (1-2, 3-4, etc.) */
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 equal columns */
-    gap: 15px; /* Spacing between boxes */
-    max-width: 400px; /* Adjusted max-width for 2 columns on mobile */
+    /* FIX: Set 2 equal columns */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px; 
+    max-width: 400px; /* Max width to contain 2 boxes neatly */
     margin: 20px auto;
 }
 
-/* Ensure the wishes grid is also two columns, as requested (21-22, 23-24, 25-next) */
-#wishes {
-    max-width: 400px; /* Same width as other grids */
-}
-
-
 .box-container {
-    /* REMOVE fixed width/height so grid can control it, but set aspect ratio for square */
-    width: 100%; /* Take up the full grid column */
-    height: 150px; /* Fixed height for image boxes */
-    margin: 0; /* Managed by grid gap */
+    width: 100%;
+    /* Standard height for photo boxes (P2, P3) */
+    height: 150px; 
+    margin: 0; 
     perspective: 1000px;
-    display: inline-block;
 }
 
-/* FIX 3: Make the wish boxes square/taller for text */
+/* FIX: Make the wish boxes (P4) taller/square for text */
 #wishes .box-container {
-    height: 200px; /* Taller height for wish boxes */
+    height: 200px; 
 }
 
-
+/* --- BOX FLIP STYLES --- */
 .box {
     width: 100%;
     height: 100%;
@@ -97,33 +94,30 @@ h1, h2 {
     color: black;
 }
 
-
 .front { background: #ffd1dc; z-index: 2; }
-
-
 .back { transform: rotateY(180deg); }
-
 
 .back img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Changed to cover for a better fit in the grid */
+    object-fit: cover; /* Use cover to fill the area */
     border-radius: 12px;
 }
 
-
-/* Specific style for Wish Box text (Wishes are on the back of the card) */
+/* Wish Box Specific Text Styling */
 #wishes .back p {
     font-size: 14px; 
     color: black; 
-    padding: 10px; 
+    padding: 5px; 
     line-height: 1.4;
-    overflow-y: auto; /* Allow scrolling if text is too long */
+    font-weight: normal;
+    overflow-y: auto; 
 }
 #wishes .back {
     background: #ffdd00; /* Distinct background for wishes */
 }
 
+/* --- CAKE/BUTTON/HEART STYLES --- */
 .heart {
     font-size: 50px;
     margin-top: 30px;
@@ -132,13 +126,11 @@ h1, h2 {
     text-shadow: 0 0 10px red;
 }
 
-
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
 }
-
 
 #cake-container {
     position: relative;
@@ -146,14 +138,12 @@ h1, h2 {
     margin-top: 20px;
 }
 
-
 #cake {
     width: 250px;
     cursor: pointer;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
     border-radius: 50%;
 }
-
 
 .flame {
     position: absolute;
@@ -166,10 +156,9 @@ h1, h2 {
     z-index: 10;
 }
 
-
 .blow { opacity: 0; }
 
-
+/* --- EFFECTS & OVERLAYS --- */
 .love {
     position: fixed;
     top: -10px;
@@ -179,11 +168,9 @@ h1, h2 {
     pointer-events: none;
 }
 
-
 @keyframes fall {
     to { transform: translateY(110vh); }
 }
-
 
 .fire {
     position: fixed;
@@ -193,13 +180,11 @@ h1, h2 {
     z-index: 10000;
 }
 
-
 @keyframes flash {
     0% { background: black; }
     50% { background: #ff0077; }
     100% { background: black; }
 }
-
 
 #start-overlay {
     position: fixed;
@@ -217,7 +202,6 @@ h1, h2 {
     text-align: center;
 }
 
-
 #start-button {
     padding: 15px 30px;
     font-size: 24px;
@@ -230,14 +214,12 @@ h1, h2 {
     animation: pulse 1s infinite;
 }
 
-
-/* New style for the final photo on P5 */
+/* --- PAGE 5 FINAL STYLES --- */
 #p5-content {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 
 #final-photo-container {
     margin-bottom: 20px;
@@ -246,7 +228,6 @@ h1, h2 {
     overflow: hidden;
     box-shadow: 0 0 20px gold;
 }
-
 
 #final-photo {
     width: 200px; 
@@ -258,7 +239,7 @@ h1, h2 {
 /* Ensure the single box on P5 is styled correctly */
 #p5-content .box-container {
     width: 250px;
-    height: 300px; /* Taller for the final message */
+    height: 300px; 
     margin: 10px;
 }
 
@@ -282,7 +263,10 @@ h1, h2 {
 <audio id="audio_p3" loop src="song3.mp3"></audio>
 <audio id="audio_p4" loop src="song4.mp3"></audio>
 <audio id="audio_p5" loop src="song5.mp3"></audio>
-<audio id="audio_finale" src="final.mp3"></audio> <section id="p1"> 
+<audio id="audio_finale" src="final.mp3"></audio>
+
+
+<section id="p1"> 
     <h1>🎂 Happy Birthday Bander 🎂</h1>
     <p> Aapko me kya gift de sakti hu.... <br> Aap khud hi meri life me bahut special gift ho. ☺️ 💛</p>
     <h2>Phir bhi aapke liye 26 pyaare gifts 🎁</h2>
@@ -357,9 +341,6 @@ h1, h2 {
 
 
 // --- CONFIGURATION START ---
-
-// **अपनी फ़ाइलें यहाँ अपडेट करें**
-
 const IMAGE_FILES_G1 = [
     "gift 1.jpg", "gift 2.jpg", "gift 3.jpg", "gift 4.jpg",
     "gift 5.jpg", "gift 6.jpg", "gift 7.jpg", "gift 8.jpg", 
@@ -375,7 +356,7 @@ const IMAGE_FILES_G2 = [
 
 
 // P5 Final Photo Name:
-document.getElementById('final-photo').src = "final.jpg"; // <--- **अपनी फ़ाइल का नाम यहाँ डालें**
+document.getElementById('final-photo').src = "final.jpg"; 
 
 
 const WISH_TEXTS = [
@@ -391,15 +372,12 @@ const BRIGHT_COLORS = [
     '#FFD1DC', '#FFB3BA', '#FFFFBA', '#BAFFC9', '#BAE1FF',
     '#FFC5A1', '#E0BBE4', '#A8DADC', '#F4978E', '#BEE3DB'
 ];
-
 // --- CONFIGURATION END ---
-
 
 
 function getRandomColor() {
     return BRIGHT_COLORS[Math.floor(Math.random() * BRIGHT_COLORS.length)];
 }
-
 
 
 const audioPlayers = {
@@ -408,9 +386,8 @@ const audioPlayers = {
     p3: document.getElementById('audio_p3'),
     p4: document.getElementById('audio_p4'),
     p5: document.getElementById('audio_p5'),
-    finale: document.getElementById('audio_finale'), // Reference to the new audio element
+    finale: document.getElementById('audio_finale'),
 };
-
 
 
 function playAudioForPage(pageId) {
@@ -427,19 +404,21 @@ function playAudioForPage(pageId) {
 }
 
 
-// FIX: This function now correctly handles the display property of sections
+// FIX: This function ensures correct page display
 function showPage(n) {
     const pageId = "p" + n;
     // Hide all sections first
     document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
     // Show only the target section
-    document.getElementById(pageId).classList.add("active");
-    playAudioForPage(pageId);
+    const targetSection = document.getElementById(pageId);
+    if (targetSection) {
+        targetSection.classList.add("active");
+        playAudioForPage(pageId);
+    }
 }
 
 
-
-// --- GIFT BOX CREATION (No Change Needed Here) ---
+// --- GIFT BOX CREATION ---
 function createGiftBox(i, containerId, imageUrl, isWish = false, wishText = "") {
     let container = document.getElementById(containerId);
     let boxContainer = document.createElement("div");
@@ -457,7 +436,6 @@ function createGiftBox(i, containerId, imageUrl, isWish = false, wishText = "") 
     back.className = "back";
     
     if (isWish) {
-        // Adjust style for wish boxes
         back.innerHTML = `<p>${wishText}</p>`;
     } else {
         back.innerHTML = `<img src="${imageUrl}" alt="Gift ${i} Photo" onerror="this.onerror=null; this.src='error.png'; console.error('Image not found: ${imageUrl}')">`;
@@ -478,7 +456,6 @@ function createGiftBox(i, containerId, imageUrl, isWish = false, wishText = "") 
 }
 
 
-
 // Populate Gifts 1-10
 for (let i = 1; i <= 10; i++) {
     createGiftBox(i, 'g1', IMAGE_FILES_G1[i-1]);
@@ -497,9 +474,7 @@ for (let i = 21; i <= 25; i++) {
 }
 
 
-
 // --- START SCREEN AND PAGE 1 LOGIC ---
-
 const startButton = document.getElementById('start-button');
 const startOverlay = document.getElementById('start-overlay');
 const cake = document.getElementById('cake');
@@ -508,8 +483,7 @@ const cake = document.getElementById('cake');
 // Handle the user click to start everything
 startButton.onclick = () => {
     startOverlay.style.display = 'none';
-    document.getElementById("p1").classList.add("active");
-    playAudioForPage('p1');
+    showPage(1); // Call showPage(1) to activate and play audio
 };
 
 
@@ -517,14 +491,11 @@ startButton.onclick = () => {
 cake.onclick = () => {
     document.querySelector(".flame").classList.add("blow");
     audioPlayers.p1.pause(); 
-    // FIX: Using showPage(2) to ensure the music and page change correctly
     setTimeout(() => showPage(2), 1500); 
 };
 
 
-
 // --- LOVE RAIN EFFECT ---
-
 let rainInterval;
 function startLoveRain() {
     if (rainInterval) { clearInterval(rainInterval); }
@@ -548,14 +519,13 @@ function startLoveRain() {
 }
 
 
-
 // --- FINAL PAGE LOGIC (UPDATED) ---
 function finale() {
     // 1. Pause any running page music
     audioPlayers.p5.pause(); 
     
     // 2. Play the final music (final.mp3)
-    audioPlayers.finale.loop = true; // Loop the final song
+    audioPlayers.finale.loop = true; 
     audioPlayers.finale.play().catch(e => console.error('Finale audio play failed:', e));
 
     // 3. Add fireworks overlay
